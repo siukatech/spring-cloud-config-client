@@ -1,6 +1,6 @@
 package com.siukatech.springcloud.configclient;
 
-import org.assertj.core.api.Assertions;
+import com.siukatech.springcloud.configclient.ui.model.StatusInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -11,7 +11,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -24,28 +23,28 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class SpringCloudConfigClientApplicationTests {
 
-	final private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+    final private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-	@Autowired
-	private TestRestTemplate restTemplate;
+    @Autowired
+    private TestRestTemplate restTemplate;
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
-	@Test
-	public void testStatus() {
-		// arrange
+    @Test
+    public void testStatus() {
+        // arrange
 
 
-		// act
-		ResponseEntity<String> response = restTemplate.getForEntity("/status", String.class);
-		logger.debug("testStatus - response.getBody: [{}]", response.getBody());
+        // act
+        ResponseEntity<StatusInfo> response = restTemplate.getForEntity("/status", StatusInfo.class);
+        logger.debug("testStatus - response.getBody: [{}]", response.getBody());
 
-		// assert
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(response.getBody()).contains("appConfig - ");
+        // assert
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody().getAppConfigInfo().getLocal()).contains("Application Name");
 
-	}
+    }
 
 }
