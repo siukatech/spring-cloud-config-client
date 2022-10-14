@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: spring-cloud-config-client
+  config:
+    import: 'optional:configserver:http://localhost:9905/'
+
+server:
+  port: 9911
+
+app:
+  local:
+    prop:
+      value: Local Application Name
+#  server:
+#    prop:
+#      value: Local Application Name
+  common:
+    prop:
+      value: Local Application Name
+
+logging:
+  level:
+    root: DEBUG
+
